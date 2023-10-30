@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 // import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
@@ -8,6 +8,15 @@ function Login() {
 
   async function submit(e) {
     e.preventDefault();
+
+    try {
+      await axios.post("http://localhost:3000/", {
+        email,
+        password,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
