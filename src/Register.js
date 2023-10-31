@@ -21,7 +21,7 @@ function Register() {
 
   return (
     <div className="register">
-      <h1> Login </h1>
+      <h1> Register </h1>
       <form action="POST">
         <input
           type="email"
