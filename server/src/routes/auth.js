@@ -1,20 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   console.log("Received request with email:", email, "and password:", password);
 
   try {
-    const user = await User.findOne({ email: email, password: password });
+    const user = await User.findOne({ email: email });
 
     if (user) {
-      // User is authenticated
-      res.status(200).json({ message: "Login successful" });
+      // User is found
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (isPasswordValid) {
+        res.status(200).json({ message: "Login successful" });
+      } else {
+        res.status(401).json({ message: "Invalid password" });
+      }
     } else {
-      // Authentication failed
-      res.status(401).json({ message: "Invalid username or password AHH" });
+      // user not found
+      res.status(401).json({ message: "Invalid email" });
     }
   } catch (error) {
     console.error("Error during login:", error);
