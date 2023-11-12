@@ -25,9 +25,8 @@ class Login extends Component {
         email,
         password,
       });
-      console.log("We are in the try statement here in line 25");
-      // If authentication is successful, you can redirect the user to a different page
-      // For simplicity, just log a message for now
+      // If authentication is successful, redirect the user to a different page
+      // rn just logging message as a placeholder
       console.log("HEHE " + response.data.message);
     } catch (error) {
       console.error("Error during login:", error.response.data.message);
