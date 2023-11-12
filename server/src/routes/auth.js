@@ -1,20 +1,24 @@
-// server/src/routes/auth.js
 const express = require("express");
 const router = express.Router();
+const User = require("../models/user");
 
-// Example route for user login
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  console.log("Received request with email:", email, "and password:", password);
 
-  // Add your authentication logic here
-  // Check the user's credentials in the database
+  try {
+    const user = await User.findOne({ email: email, password: password });
 
-  if (username === "example" && password === "password") {
-    // User is authenticated
-    res.status(200).json({ message: "Login successful" });
-  } else {
-    // Authentication failed
-    res.status(401).json({ message: "Invalid username or password" });
+    if (user) {
+      // User is authenticated
+      res.status(200).json({ message: "Login successful" });
+    } else {
+      // Authentication failed
+      res.status(401).json({ message: "Invalid username or password AHH" });
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
