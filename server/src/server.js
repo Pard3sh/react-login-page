@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -16,28 +17,27 @@ app.use(cors());
 
 const user = process.env.MONGODB_USER;
 const pass = process.env.MONGODB_PASS;
-const uri = process.env.MONGODB_ALT2_URI;
-let MONGODB_URI = `mongodb+srv://${user}:${pass}@${uri}`;
+const uri = process.env.MONGODB_URI;
+const mongoDB_uri = `mongodb+srv://${user}:${pass}@${uri}`;
 
-MONGODB_URI =
-  "mongodb+srv://pard3sh:hGKecIRTJxsdvaqn@volunteerportal.zv9kfyo.mongodb.net/database0";
+// MONGODB_URI =
+//   "mongodb+srv://pard3sh:hGKecIRTJxsdvaqn@volunteerportal.zv9kfyo.mongodb.net/database0";
 
 // figure out how to do the mongoDB connectio nheheh
 // mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');
 
-const User = mongoose.model("User", { email: String, password: String });
-
-const example = User({ email: "user1@example.com", password: "abc123" });
-console.log("Pre Connected to MongoDB");
 mongoose
-  .connect(MONGODB_URI)
+  .connect(mongoDB_uri)
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((error) => {
     console.error("MongoDB connection error", error);
   });
-console.log("Post Connected to MongoDB");
+
+// example.save().then((savedExample) => {
+//   console.log("User saved to the database:", savedExample);
+// });
 
 // Routes
 const authRoutes = require("./routes/auth");
