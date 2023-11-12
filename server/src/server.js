@@ -1,4 +1,4 @@
-// server/src/server.js
+// make sure .env file is in server folder
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -20,12 +20,6 @@ const pass = process.env.MONGODB_PASS;
 const uri = process.env.MONGODB_URI;
 const mongoDB_uri = `mongodb+srv://${user}:${pass}@${uri}`;
 
-// MONGODB_URI =
-//   "mongodb+srv://pard3sh:hGKecIRTJxsdvaqn@volunteerportal.zv9kfyo.mongodb.net/database0";
-
-// figure out how to do the mongoDB connectio nheheh
-// mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');
-
 mongoose
   .connect(mongoDB_uri)
   .then(() => {
@@ -34,10 +28,6 @@ mongoose
   .catch((error) => {
     console.error("MongoDB connection error", error);
   });
-
-// example.save().then((savedExample) => {
-//   console.log("User saved to the database:", savedExample);
-// });
 
 // Routes
 const authRoutes = require("./routes/auth");
