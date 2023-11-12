@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      email: "",
       password: "",
       error: "",
     };
@@ -17,27 +18,24 @@ class Login extends Component {
   handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const { username, password } = this.state;
+    const { email, password } = this.state;
 
-    // Basic validation
-    if (!username || !password) {
-      this.setState({ error: "Please enter both username and password" });
-      return;
+    try {
+      const response = await axios.post("http://localhost:3000/api/login", {
+        email,
+        password,
+      });
+      console.log("We are in the try statement here in line 25");
+      // If authentication is successful, you can redirect the user to a different page
+      // For simplicity, just log a message for now
+      console.log("HEHE " + response.data.message);
+    } catch (error) {
+      console.error("Error during login:", error.response.data.message);
+      this.setState({ error: "Invalid email or password" });
+      console.error("Error during login:", error);
+      console.error("Error response:", error.response); // Log the entire error object
+      this.setState({ error: "Invalid email or password" });
     }
-
-    // Here, you can make an API request to your backend to perform authentication
-    // For simplicity, we'll just show an error message
-    this.setState({ error: "Invalid username or password" });
-
-    // You can replace this with an actual API call to authenticate the user
-    // Example API call with axios:
-    // try {
-    //   const response = await axios.post('/api/login', { username, password });
-    //   // If authentication is successful, you can redirect the user to a different page
-    //   // window.location.href = '/dashboard'; // Replace with your route
-    // } catch (error) {
-    //   this.setState({ error: 'Invalid username or password' });
-    // }
   };
 
   render() {
@@ -47,9 +45,9 @@ class Login extends Component {
         <form onSubmit={this.handleFormSubmit}>
           <input
             type="text"
-            name="username"
-            placeholder="Username"
-            value={this.state.username}
+            name="email"
+            placeholder="Email"
+            value={this.state.email}
             onChange={this.handleInputChange}
           />
           <input
