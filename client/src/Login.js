@@ -28,12 +28,14 @@ class Login extends Component {
       // If authentication is successful, redirect the user to a different page
       // rn just logging message as a placeholder
       console.log("HEHE " + response.data.message);
+      window.alert("Login successful");
     } catch (error) {
       console.error("Error during login:", error.response.data.message);
       this.setState({ error: "Invalid email or password" });
       console.error("Error during login:", error);
       console.error("Error response:", error.response); // Log the entire error object
       this.setState({ error: "Invalid email or password" });
+      window.alert("Login unsuccessful");
     }
   };
 
